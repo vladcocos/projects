@@ -1,0 +1,106 @@
+I. Organizare proiect
+
+1. Main (fara pachet)
+2. Image
+	a) Image
+3. Shapes
+	a) Canvas
+	b) Circle
+	c) Diamond
+	d) Line
+	e) Pixel
+	f) Polygon
+	g) Rectangle
+	h) Shape (clasa abstracta)
+	i) Square
+	j) Triangle
+4. Tools
+	a) DrawableShapes (interfata)
+	b) DrawAlgorithm
+	c) DrawTool (interfata)
+	d) Factory
+	e) Sketcher
+	
+-------------------
+
+II. Implementare Visitor, Singleton, Factory
+
+1. Singleton
+Singleton este folosit pentru a crea o singura instanta a clasei Factory si se
+realiza prin apelarea metodei getFactory din clasa Factory. Daca aceasta
+clasa a fost deja instantiata, se returneaza o referinta catre aceasta.
+
+2. Factory
+Este folosit pentru a returna un obiect de tip diferit in functie de inputul
+primit. In cazul acesta, inputul il reprezinta un String citit din fisierul de
+input ce contine tipul unei figuri geometrice si detalii despre aceasta, iar
+Factory returneaza o instanta a clasei de tipul figurii geometrice respective.
+
+3. Visitor
+Am declarat obiectul de tip visitor ca fiind o unealta de desenat (numita
+Sketcher), iar obiectele de tip visitable sunt formele geometrice (Canvas,
+Circle, Diamond, Line, Polygon, Rectangle, Square, Triangle) ce trebuie
+desenate. Asadar, Sketcher implementeaza interfata de tip visitor DrawTool
+(ce contine metoda "draw", supraincarcata pentru fiecare tip de figura
+geometrica), iar formele geometrice implementeaza interfata de tip visitable
+DrawableShape (ce contine metoda "getDrawn"). Metoda "accept" este redenumita
+"getDrawn" (figura geometrica este desenata de catre sketcher), iar metoda
+"visit" este redenumita "draw".
+
+-------------------
+
+III. Implementare propriu-zisa
+
+1. Toate clasele din pachetul Shapes, exceptand clasele Pixel si Shape, contin
+campuri ce definesc fiecare figura geometrica (de exemplu: coordonatele
+punctului de start, inaltime, lungime, raza cercului, etc.), functii de tip get
+pentru aceste campuri si un constructor cu parametru vector de String-uri
+(tokenii delimitati de spatiu obtinuti din spargerea String-ul citit din
+fisierul de input care contine detalii despre fiecare figura.
+
+Clasa Pixel este folosita doar pentru metoda "fill" din clasa DrawAlgorithm
+si contine coordonatele "x" si "y" pentru un pixel.
+
+Clasa Shape este una abstracta ce contine campuri pentru culorile de contur
+si de interior pentru o forma geometrica. Toate figurile geometrice concrete
+mostenesc clasa Shape.
+
+2. Clasa Image contine campul BufferedImage si metodele get si set pentru
+acesta. In acest camp va fi stocata matricea de pixeli ce descriu imaginea.
+
+3. Clasa DrawAlgorithm contine campuri necesare pentru algoritmul Bresenham
+si metodele drawLine, drawCircle, drawCircleMethod si fill.
+a) Metoda drawLine traseaza o linie folosind algoritmul Bresenham. Aceasta
+primeste coordonatele punctelor de start si final, culoarea liniei si imaginea.
+
+b) Metoda drawCircle foloseste algoritmul Bresenham pentru cercuri pentru a
+trasa conturul unui cerc. Aceasta primeste coordonatele centrului cercului,
+raza si culoarea acestuia si imaginea.
+
+c) Metoda drawCircleMethod este apelata de catre drawCircle pentru a colora
+efectiv pixelii pentru conturul cercului.
+
+d) Metoda fill primeste un Pixel (cu coordonate "x" si "y") ce descrie centrul
+de greutate ale unei forme geometrice, culoarea de interior si culoarea de
+contur ale acesteia si imaginea. Metoda creeaza un ArrayList ce se comporta
+ca o coada si adauga in aceasta punctul initial (centrul de greutate). Cat timp
+coada nu este goala, se extrage primul element (cu indexul 0, denumit punctul
+curent) si se verifica daca acesta apartine canvas-ului ("x" >= 0 si < latime;
+"y" >= 0 si < inaltime; aceasta conditie se verifica mereu cand se coloreaza
+un pixel), daca culoarea sa este diferita de culoarea de interior a formei si
+daca este diferita si de culoarea de contur a formei (daca culoarea pixel-ului
+este aceeasi cu culoarea de contur, inseamna ca acesta se afla pe contur si nu
+in interior). Daca toate conditiile sunt indeplinite, pixel-ul curent se
+coloreaza cu culoarea de interior a formei. Se verifica daca toti cei 4 vecini
+(sus, jos, stanga, dreapta) se afla in canvas, iar cei care se afla se adauga
+la sfarsitul cozii.
+
+-------------------
+
+IV. Mentiuni
+
+1. Determinarea numarului intreg ce contine culoarea unui pixel se face in
+felul urmator: se shifteaza la stanga opacitatea culorii cu 24 (pentru a muta
+valoarea sa pe octetul cel mai semnificativ), se transforma codul de culoare
+de tip hex intr-un intreg in baza 10 si se adauga la numarul in care a fost
+shiftata opacitatea.
