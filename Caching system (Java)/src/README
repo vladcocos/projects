@@ -1,0 +1,1 @@
+A Java program that implements a caching system with 3 different types of replacement policies (FIFO, Least Recently Used (LRU) & Time Awareness LRU).
