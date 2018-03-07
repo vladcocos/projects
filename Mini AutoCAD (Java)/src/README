@@ -1,0 +1,1 @@
+A program that could read input representing coordinates and properties (like width, height, color and margin color) of different geometrical shapes (e.g. square, triangle, polygon or circle) and create a .png image based on those shapes.
