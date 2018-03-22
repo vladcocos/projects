@@ -1,1 +1,0 @@
-A program that reads an input image and applies different filters (like black and white or filters to detect the edges of objects), compresses the image using lossy compression algorithm or decompresses it.
