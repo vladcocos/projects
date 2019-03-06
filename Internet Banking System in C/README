@@ -1,0 +1,1 @@
+A simplified banking system developed using TCP/UDP Unix sockets for communication between a server and multiple clients. Clients could send requests to the server regarding their bank accounts and receive real-time responses from the server.
