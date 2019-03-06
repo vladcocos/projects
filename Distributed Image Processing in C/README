@@ -1,0 +1,1 @@
+Developed a program that applies different filters (blur, sharpen, smooth, emboss, mean removal) to a .pnm image. The workload is divided evenly on a computer cluster that uses OpenMPI communication to send and receive data.
