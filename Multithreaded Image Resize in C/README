@@ -1,0 +1,1 @@
+Implemented a C program that uses POSIX threads to resize a .pnm image.
